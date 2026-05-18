@@ -44,7 +44,7 @@ class SimWorker(QThread):
                 title = f"Monte Carlo ({len(histories)} runs) — {self.label}"
                 self.result_mc.emit(mean, histories, title)
         else:
-            if self.sim == "random":
+            if self.sim == "Random":
                 _, price_history = random_simulation(should_stop=self._should_stop, **self.sim_kwargs)
             else:
                 _, price_history = dca_simulation(should_stop=self._should_stop, **self.sim_kwargs)
@@ -202,8 +202,8 @@ class MainWindow(QMainWindow):
         root.addWidget(self.canvas, stretch=1)
 
     def _on_sim_changed(self, sim):
-        self.rand_group.setVisible(sim == "random")
-        self.dca_group.setVisible(sim == "dca")
+        self.rand_group.setVisible(sim == "Random")
+        self.dca_group.setVisible(sim == "DCA")
 
     def _tick_anim(self):
         dots = "." * (self._anim_step % 4)

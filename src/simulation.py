@@ -45,7 +45,7 @@ def dca_simulation(initial_price=100, num_dca_agents=10, num_rand_agents=90, tic
         price_history.append(order_book.last_price)
     return order_book, price_history
 
-def monte_carlo(sim="random", n=50, initial_price=100, ticks=1000, seed=None, should_stop=None, **kwargs):
+def monte_carlo(sim="Random", n=50, initial_price=100, ticks=1000, seed=None, should_stop=None, **kwargs):
     rng = np.random.default_rng(seed)
     histories = []
 
@@ -53,14 +53,17 @@ def monte_carlo(sim="random", n=50, initial_price=100, ticks=1000, seed=None, sh
         if should_stop and should_stop():
             break
         run_seed = int(rng.integers(0, 2**31))
-        if sim == "random":
+        if sim == "Random":
             _, history = random_simulation(
                 initial_price=initial_price, ticks=ticks, seed=run_seed,
-                should_stop=should_stop, **kwargs)
+                should_stop=should_stop,
+                num_agents=kwargs.get("num_agents", 100))
         else:
             _, history = dca_simulation(
                 initial_price=initial_price, ticks=ticks, seed=run_seed,
-                should_stop=should_stop, **kwargs)
+                should_stop=should_stop,
+                num_dca_agents=kwargs.get("num_dca_agents", 10),
+                num_rand_agents=kwargs.get("num_rand_agents", 90))
         histories.append(history)
 
     if not histories:
