@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(& \"c:\\\\Users\\\\devak\\\\OneDrive\\\\Desktop\\\\CVCompControl\\\\.venv\\\\Scripts\\\\pip.exe\" install PySide6)",
-      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\devak\\\\OneDrive\\\\Desktop\\\\CVCompControl\" -Force -Name | Where-Object { $_ -notmatch '^\\\\.' -or $_ -eq '.git' })"
-    ]
-  }
-}
