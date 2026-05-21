@@ -1,7 +1,7 @@
 # DCA Simulator & Market Impact Analysis
 
 **Author:** Devak Sangar  
-**Stack:** Python · PySide6 · NumPy · Pandas · Matplotlib · SciPy
+**Stack:** Python · PySide6 · NumPy · Pandas · Matplotlib
 
 An agent-based stock market simulator built to study how Dollar Cost Averaging (DCA) investors affect market dynamics. The simulator models random traders and DCA investors interacting through a shared order book, with a desktop GUI for configuration and data export. A companion Jupyter notebook conducts full statistical analysis on the exported results.
 
@@ -65,13 +65,12 @@ Built with PySide6. Configure agent counts, tick length, seed, and Monte Carlo r
 
 ### Analysis
 
-A Jupyter notebook (`analysis.ipynb`) performs full statistical analysis on exported CSVs. Metrics computed:
+A Jupyter notebook (`Stock Sim Analysis.ipynb`) performs full statistical analysis on exported CSVs. Metrics computed:
 
 - Log returns and rolling volatility
-- Autocorrelation function (ACF)
 - Max drawdown
 - VaR 5% and CVaR 5% (expected shortfall)
-- P(gain) — probability final price exceeds initial price
+- P(gain): probability final price exceeds initial price
 - 95th percentile return
 
 ---
@@ -90,7 +89,7 @@ Random agent count held constant at 100. DCA agent count varied across 7 configu
 | 50  | 150 | 33% |
 | 100 | 200 | 50% |
 
-50 Monte Carlo runs per configuration · 1000 ticks per run
+50 Monte Carlo runs per configuration - 1000 ticks per run
 
 ---
 
@@ -98,7 +97,7 @@ Random agent count held constant at 100. DCA agent count varied across 7 configu
 
 ### 1. Critical threshold at 10–17% DCA participation
 
-P(gain) jumps from 44% to 88% between 9% and 17% DCA penetration — a 44pp increase in a single step. Above 17%, the market almost always ends in profit. This points to a threshold effect where a small minority of systematic buyers tips the market from uncertain to reliably profitable.
+P(gain) jumps from 44% to 88% between 0% and 17% DCA penetration, a 44pp increase in two steps. Above 17%, the market almost always ends in profit. This points to a threshold effect where a small minority of systematic buyers tips the market from uncertain to reliably profitable.
 
 | DCA Participation | P(gain) |
 |---|---|
@@ -106,30 +105,45 @@ P(gain) jumps from 44% to 88% between 9% and 17% DCA penetration — a 44pp incr
 | 9%  | 64%  |
 | 17% | 88%  |
 | 23% | 92%  |
+| 29% | 96%  |
 | 33% | 100% |
+| 50% | 100% |
 
 ### 2. Tail risk nearly eliminated by 33% DCA
 
-VaR 5% improves from -18.11% to +17.07% as DCA penetration increases from 0% to 33%. CVaR (expected shortfall) follows the same trend. Above 33% penetration, even the worst 5% of outcomes are profitable — catastrophic loss scenarios cease to exist.
+VaR 5% improves from -18.11% to +17.07% as DCA penetration increases from 0% to 33%. CVaR (expected shortfall) follows the same trend. Above 33% penetration, even the worst 5% of outcomes are profitable; catastrophic loss scenarios cease to exist.
 
 | DCA Participation | VaR 5%  | CVaR 5%  |
 |---|---|---|
 | 0%  | -18.11% | -23.10% |
+| 9%  | -11.07% | -13.36% |
 | 17% | -3.80%  | -7.98%  |
+| 23% | -1.45%  | -2.89%  |
 | 29% | +7.51%  | -0.99%  |
 | 33% | +17.07% | +15.74% |
+| 50% | +34.16% | +30.04% |
 
 ### 3. Asymmetric distribution shift
 
-DCA does not simply compress the return distribution — it shifts it rightward while simultaneously expanding the right tail. The 95th percentile return grows from 16% to 78% as DCA penetration increases from 0% to 50%, while worst-case losses are reduced at the same time.
+DCA does not simply compress the return distribution, it shifts it rightward while simultaneously expanding the right tail. The 95th percentile return grows from 16% to 78% as DCA penetration increases from 0% to 50%, while worst-case losses are reduced at the same time.
 
 ### 4. Worst-case drawdown cut by 67%
 
-Mean max drawdown falls monotonically from 13.2% to 5.6% across the sweep. Worst-case drawdown drops from 29.0% to 9.6%. DCA buyers act as a price floor — scheduled buying absorbs selling pressure during dips regardless of market conditions.
+Mean max drawdown falls monotonically from 13.2% to 5.6% across the sweep. Worst-case drawdown drops from 29.0% to 9.6%. DCA buyers act as a price floor; scheduled buying absorbs selling pressure during dips regardless of market conditions.
 
 ### 5. Volatility-stability tradeoff
 
-Rolling volatility increases 316% from 0% to 50% DCA penetration. This reflects the periodic buying signal injected by DCA agents every 30 ticks rather than increased market instability — confirmed by the simultaneous reduction in drawdown and tail risk across the same range.
+Rolling volatility increases 316% from 0% to 50% DCA penetration. This reflects the periodic buying signal injected by DCA agents every 30 ticks rather than increased market instability, confirmed by the simultaneous reduction in drawdown and tail risk across the same range.
+
+## Conclusion
+
+A minority of DCA investors, as few as 17% of market participants is sufficient to fundamentally alter market dynamics in this simulation. The effect operates through two mechanisms: consistent scheduled buying creates a persistent upward drift that compounds over 1000 ticks, and DCA buyers act as automatic stabilisers during price declines, absorbing selling pressure and limiting sustained drawdowns.
+
+The data reveals a critical threshold between 9–17% DCA penetration where market behaviour shifts from uncertain (44% P(gain)) to reliably profitable (88%+). Above 33% penetration, tail risk is effectively eliminated. The cost of this stability is increased tick-to-tick volatility, a 316% increase at 50% DCA, caused by the periodic buying signal injected every 30 ticks, not increased market instability.
+
+These findings suggest that systematic minority behaviour can have outsized structural effects on market outcomes, even when the majority of participants act randomly.
+
+These findings are specific to a controlled simulation environment with simplified agent behaviour and should not be interpreted as definitive conclusions about real market dynamics, where factors such as institutional behaviour, market sentiment, liquidity constraints, and macroeconomic conditions introduce significantly greater complexity.
 
 ---
 
@@ -152,7 +166,7 @@ python main.py
 **Run the analysis** (after exporting CSVs from the GUI):
 
 ```bash
-jupyter notebook analysis.ipynb
+jupyter notebook 'Stock Sim Analysis.ipynb'
 ```
 
 ---
@@ -163,7 +177,6 @@ jupyter notebook analysis.ipynb
 numpy
 pandas
 matplotlib
-scipy
 pyside6
 jupyter
 ```
