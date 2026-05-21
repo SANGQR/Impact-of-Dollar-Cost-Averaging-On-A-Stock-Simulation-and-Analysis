@@ -14,6 +14,8 @@ An agent-based stock market simulator built to study how Dollar Cost Averaging (
 - [How It Works](#how-it-works)
 - [Experimental Design](#experimental-design)
 - [Key Findings](#key-findings)
+- [Conclusion](#conclusion)
+- [Future Work and Recommendations](#future-work-and-recommendations)
 - [Getting Started](#getting-started)
 
 ---
@@ -70,14 +72,22 @@ A Jupyter notebook (`Stock Sim Analysis.ipynb`) performs full statistical analys
 - Log returns and rolling volatility
 - Max drawdown
 - VaR 5% and CVaR 5% (expected shortfall)
-- P(gain): probability final price exceeds initial price
+- P(gain): probability that the final price exceeds the initial price
 - 95th percentile return
 
 ---
 
 ## Experimental Design
 
-Random agent count held constant at 100. DCA agent count varied across 7 configurations:
+Random agent count held constant at 100.
+Random agents randomly (equal probability) buy, sell, or hold. This is meant to simulate a real **random** market.
+Random agents value stocks using a lognormal distribution centered around the previous tick's price.
+Random agent number of shares follows a lognormal distribution centered around e^2 or approximately 7 shares.
+
+DCA agent count varied across 7 configurations: 0%, 9%, 17%, 23%, 29%, 33%, 50%
+DCA agents consistently buy every 30 ticks (days). This is done to simulate real DCA buying methods.
+DCA agents buy at a small premium over the previous tick's price (1.5%).
+DCA number of shares is calculated using a budget of $500/(previous_price) / month, rounded down to a whole number.
 
 | DCA Agents | Total Agents | DCA Participation |
 |---|---|---|
@@ -145,8 +155,33 @@ These findings suggest that systematic minority behaviour can have outsized stru
 
 These findings are specific to a controlled simulation environment with simplified agent behaviour and should not be interpreted as definitive conclusions about real market dynamics, where factors such as institutional behaviour, market sentiment, liquidity constraints, and macroeconomic conditions introduce significantly greater complexity.
 
----
+## Future Work and Recommendations
 
+The simulation is complete in its current scope but has clear directions for extension.
+Suggestions, issues, and pull requests are welcome.
+
+### To-Do
+
+- [ ] Embed key figures (price path overlays, P(gain) curve, VaR sweep) directly in README
+- [ ] Bootstrap confidence intervals on P(gain) and VaR to quantify threshold significance
+- [ ] Sensitivity analysis: vary DCA interval (10, 20, 30 ticks) and buy premium (0.5%, 1.5%, 3%) 
+      to test whether the critical 10–17% threshold is parameter-dependent
+- [ ] Return autocorrelation analysis — does periodic DCA buying introduce predictable 
+      structure into the return series?
+
+### Recommendations
+
+Some directions worth exploring if you want to extend the project:
+
+- **Agent heterogeneity** — momentum traders (buy after price rises, sell after declines) 
+  or mean-reversion agents (buy below moving average) would produce more realistic 
+  baseline dynamics and stress-test the threshold finding against non-random markets
+- **Price impact model** — a size-weighted order book where larger orders move price 
+  proportionally would make the DCA stabilization effect emerge more naturally, 
+  rather than being partly driven by the fixed 1.5% premium
+- **Empirical calibration** — calibrating RandomAgent behaviour to match real equity 
+  return distributions (fat tails, volatility clustering) would strengthen external validity
+  
 ## Getting Started
 
 **Clone and install dependencies:**
