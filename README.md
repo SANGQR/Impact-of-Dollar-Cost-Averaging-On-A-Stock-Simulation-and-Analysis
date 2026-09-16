@@ -181,6 +181,8 @@ Some directions worth exploring if you want to extend the project:
   rather than being partly driven by the fixed 1.5% premium
 - **Empirical calibration** — calibrating RandomAgent behaviour to match real equity 
   return distributions (fat tails, volatility clustering) would strengthen external validity
+- **Linear Regression** — Adding linear regression models to the generated plots would help
+  identify underlying trends and correlations within the simulation data.
   
 ## Getting Started
 
