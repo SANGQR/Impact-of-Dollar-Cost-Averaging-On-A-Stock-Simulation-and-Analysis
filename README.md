@@ -145,6 +145,11 @@ Mean max drawdown falls monotonically from 13.2% to 5.6% across the sweep. Worst
 
 Rolling volatility increases 316% from 0% to 50% DCA penetration. This reflects the periodic buying signal injected by DCA agents every 30 ticks rather than increased market instability, confirmed by the simultaneous reduction in drawdown and tail risk across the same range.
 
+
+<img width="2443" height="2745" alt="image" src="https://github.com/user-attachments/assets/4681b7ec-3faa-438f-8bd1-5857948fc22d" />
+
+
+      
 ## Conclusion
 
 A minority of DCA investors, as few as 17% of market participants is sufficient to fundamentally alter market dynamics in this simulation. The effect operates through two mechanisms: consistent scheduled buying creates a persistent upward drift that compounds over 1000 ticks, and DCA buyers act as automatic stabilisers during price declines, absorbing selling pressure and limiting sustained drawdowns.
