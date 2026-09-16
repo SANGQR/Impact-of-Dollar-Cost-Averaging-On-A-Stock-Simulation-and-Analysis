@@ -167,7 +167,7 @@ Suggestions, issues, and pull requests are welcome.
 
 ### To-Do
 
-- [ ] Embed key figures (price path overlays, P(gain) curve, VaR sweep) directly in README
+- [x] Embed key figures (price path overlays, P(gain) curve, VaR sweep) directly in README
 - [ ] Bootstrap confidence intervals on P(gain) and VaR to quantify threshold significance
 - [ ] Sensitivity analysis: vary DCA interval (10, 20, 30 ticks) and buy premium (0.5%, 1.5%, 3%) 
       to test whether the critical 10–17% threshold is parameter-dependent
